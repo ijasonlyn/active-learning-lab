@@ -216,5 +216,22 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+<<<<<<< HEAD
 venv/
 tmp/
+=======
+
+# Google Colab / Drive artifacts
+# .ipynb_checkpoints/
+# .DS_Store
+#
+# # Large model files (save these locally/in GD, not GitHub)
+# *.bin
+# *.pt
+# *.pth
+# *.pkl
+#
+# # Data safety
+# # If the data is proprietary, uncomment the next line:
+# # data/
+>>>>>>> a4c31122022aef6c58f03ad74351787358dc7c2a
