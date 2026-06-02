@@ -273,7 +273,7 @@ def get_annotations(data, default_sampling_strategy="random"):
                         
                     data[ind][2] = label # add label to our data
                     
-                    logger.log(data[ind][0],label,data[ind][3],data[ind][4]) # logger 
+                    logger.log(data[ind][0],label,data[ind][3],data[ind][4]) # a bug here:  logger, logged at labeling; if fail to save the annotated headlines, the log will not sync with the data.
 
                     if data[ind][3] is None or data[ind][3] == "":
                         data[ind][3] = default_sampling_strategy # add default if none given
