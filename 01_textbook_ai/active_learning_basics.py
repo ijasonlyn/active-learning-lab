@@ -42,8 +42,8 @@ epochs = 10 # number of epochs per training session
 select_per_epoch = 200  # number to select per epoch per label
 
 
-data = []
-test_data = []
+data = []  # global variable to hold all data, including unlabeled, training, validation, and evaluation data.
+test_data = [] #global variable to hold test data, not used in this example but could be added in the future
 
 # directories with data
 unlabeled_data = "unlabeled_data/unlabeled_data.csv"
@@ -63,13 +63,16 @@ feature_index = {} # feature mapping for one-hot encoding
 
 
 def load_data(filepath, skip_already_labeled=False):
+    """ 1. Loads data from a csv file;
+        2. Adds empty columns for label, sampling strategy, and confidence;
+        3. Adds already labeled items to the already_labeled dict """
     # csv format: [ID, TEXT, LABEL, SAMPLING_STRATEGY, CONFIDENCE]
     with open(filepath, 'r') as csvfile:
         data = []
         reader = csv.reader(csvfile)
         for row in reader:
             if skip_already_labeled and row[0] in already_labeled:
-                continue
+                continue     # skip if the row has already been labeled.
                 
             if len(row) < 3:
                 row.append("") # add empty col for LABEL to add later
@@ -189,10 +192,10 @@ def create_features(minword = 3):
     """
 
     total_training_words = {}
-    for item in data + training_data:
+    for item in data + training_data:    # for all unlabeled and training data. 
         text = item[1]
         for word in text.split():
-            if word not in total_training_words:
+            if word not in total_training_words:  # count how many times each word appears in the training data, so we can filter out rare words that won't be helpful features
                 total_training_words[word] = 1
             else:
                 total_training_words[word] += 1
@@ -200,8 +203,8 @@ def create_features(minword = 3):
     for item in data + training_data:
         text = item[1]
         for word in text.split():
-            if word not in feature_index and total_training_words[word] >= minword:
-                feature_index[word] = len(feature_index)
+            if word not in feature_index and total_training_words[word] >= minword:   # words that appear more than twice in the training data, or appear in non-training data one more time than in training data, will be features. This is a simple way to filter out very rare words that won't be helpful features.
+                feature_index[word] = len(feature_index)  # assign the next index to this new word.
 
     return len(feature_index)
 
@@ -225,12 +228,12 @@ class SimpleTextClassifier(nn.Module):  # inherit pytorch's nn.Module
         output = self.linear2(hidden1)
         return F.log_softmax(output, dim=1)
                                 
-
+# create a feature vector for an item based on the feature_index mapping.
 def make_feature_vector(features, feature_index):
     vec = torch.zeros(len(feature_index))
     for feature in features:
         if feature in feature_index:
-            vec[feature_index[feature]] += 1
+            vec[feature_index[feature]] += 1 # add 1 for each time this feature appears in the text
     return vec.view(1, -1)
 
 

@@ -1,0 +1,4 @@
+1. add the missing stemming (normalization);
+2. add timestamp for checking improvement
+3. replace the tokenization function with Python build-in package Collections.Counter for vocabulary
+

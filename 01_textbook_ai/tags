@@ -1,0 +1,11 @@
+LongTensor	advanced_active_learning.py	/^                target = torch.LongTensor([label])/
+NLLLoss	active_learning.py	/^    loss_function = nn.NLLLoss()$/
+UncertaintySampling	advanced_active_learning.py	/^        self.uncertainty_sampling = UncertaintySam/
+feature_method	advanced_active_learning.py	/^            feature_vector = feature_method(text)$/
+getopt	active_learning.py	/^    arguments, values = getopt.getopt(arg_list, ""/
+item	uncertainty_sampling.py	/^        return normalized_least_conf.item()$/
+open	active_learning.py	/^    with open(filepath, 'r') as csvfile:$/
+remove_from_cluster	pytorch_clusters.py	/^            previous_cluster.remove_from_cluster(i/
+shuffle	diversity_sampling.py	/^            shuffle(data)$/
+split	pytorch_clusters.py	/^        words = text.split()   $/
+strftime	annotation_logger.py	/^        self.session_id = datetime.now().strftime(/
